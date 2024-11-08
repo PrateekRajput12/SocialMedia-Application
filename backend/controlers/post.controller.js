@@ -1,7 +1,7 @@
 import sharp from "sharp"
-import cloudinary from "../utils/cloudanary"
+import cloudinary from "../utils/cloudanary.js"
 import {Post} from '../models/post.model.js'
-import User from "../models/user.model"
+import User from "../models/user.model.js"
 import { populate } from "dotenv"
 export const addNewPost=async (req,res)=>{
     try{
