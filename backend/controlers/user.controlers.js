@@ -24,7 +24,7 @@ export const register = async(req,res)=>{
             email,
             password:hashedPassword
         })
-        res.status(201).json({message:"Account Created Successfully",success:false})
+        res.status(201).json({message:"Account Created Successfully",success:true})
 
     }catch(err){
         console.log(err);
@@ -86,22 +86,26 @@ res.status(400).json({message:"Error in signing up"})
 }
 
 
-export const logout=async (req,res)=>{
+export const logout=async (_,res)=>{
     try {
-        return res.cookie("token","",{maxAge:0}.json({
+        return res.cookie("token","",{maxAge:0}).json({
             message:"Logged out successfully",
             success:true
-        }))
+        })
     } catch (error) {
+        console.log("error in logout");
         console.log(error);
     }
 }
 
 export const getProfile=async (req,res)=>{
     try {
-     const userId=req.params._id
-     let user=await User.findById(userId)  
-     return res.status 
+        console.log("at start");
+     const userId=req.params.id
+     console.log("yaha");
+     let user=await User.findById(userId) 
+     console.log(user); 
+     return res.status(200).json({user,success:true})
     } catch (error) {
         console.log(error);
     }
@@ -122,7 +126,7 @@ if(profilePicture){
 }
 
 
-const user =await User.findById(userId)
+const user =await User.findById(userId).select('-password')
 if(!user){
     return res.status(400).json({
         message:"User not found",
